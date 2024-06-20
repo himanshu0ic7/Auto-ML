@@ -1,5 +1,5 @@
 ---
-title: Image To Text App
+title: AUTOML
 emoji: 📹
 colorFrom: blue
 colorTo: red
