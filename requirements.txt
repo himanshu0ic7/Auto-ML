@@ -1,0 +1,7 @@
+numpy
+pandas
+streamlit
+pycaret
+pandas_profiling
+streamlit_pandas_profiling
+pydantic==1.10.11
