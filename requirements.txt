@@ -4,5 +4,4 @@ streamlit
 pycaret
 pandas_profiling
 streamlit_pandas_profiling
-pydantic
-pydantic-settings
+pydantic==1.10.11
