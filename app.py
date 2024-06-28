@@ -1,9 +1,8 @@
 import os
 import pandas as pd
-import pandas_profiling
+import ydata_profiling
 import streamlit as st
 from streamlit_pandas_profiling import st_profile_report
-from pydantic_settings import BaseSettings
 
 # Initialize session state for the dataframe
 if 'df' not in st.session_state:
@@ -13,7 +12,7 @@ if 'df' not in st.session_state:
 with st.sidebar:
     st.image("AutoML.png")
     st.title("AutoML")
-    choice = st.radio("Navigation", ['Upload', 'Profiling', 'Modelling', 'Download'])
+    choice = st.radio("Navigation", ['Upload', 'Profiling', 'Modelling', 'Inference', 'Download'])
     st.info("Wanna do ML but don't know much about it? No worries, just upload your dataset.")
 
 # Handling dataset upload
@@ -22,7 +21,6 @@ if choice == 'Upload':
     file = st.file_uploader("Upload CSV data")
     if file:
         st.session_state.df = pd.read_csv(file, index_col=None)
-        #st.session_state.df.to_csv('dataset.csv', index=None)
         st.dataframe(st.session_state.df)
         st.success("Dataset uploaded successfully!")
 
@@ -58,6 +56,24 @@ if choice == "Modelling":
             st.success("Modeling completed successfully! You can now download your model.")
     else:
         st.warning("Please upload a dataset first.")
+
+# Model inference
+if choice == "Inference":
+    st.title("Make Predictions")
+    try:
+        from pycaret.classification import load_model, predict_model
+        model = load_model('best_model')
+        
+        file = st.file_uploader("Upload data for predictions")
+        if file:
+            predict_df = pd.read_csv(file, index_col=None)
+            predictions = predict_model(model, data=predict_df)
+            st.dataframe(predictions)
+            st.success("Predictions made successfully!")
+    except FileNotFoundError:
+        st.warning("No model found. Please run the modeling step first.")
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
 
 # Model download
 if choice == "Download":
