@@ -1,7 +1,5 @@
-numpy
-pandas
 streamlit
+pandas
+ydata-profiling>=4.0.0
 pycaret
-pandas_profiling
-streamlit_pandas_profiling
-pydantic==1.10.11
+pydantic-settings
