@@ -3,3 +3,4 @@ pandas
 ydata-profiling>=4.0.0
 pycaret
 pydantic-settings
+streamlit_pandas_profiling
